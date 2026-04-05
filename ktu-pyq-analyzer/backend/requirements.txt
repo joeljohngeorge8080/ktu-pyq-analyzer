@@ -9,6 +9,7 @@ Pillow==10.3.0
 numpy<2
 pypdf==4.2.0
 pdf2image==1.17.0
+pytesseract==0.3.10
 python-jose[cryptography]==3.3.0
 pydantic==2.7.1
 pydantic-settings==2.2.1
@@ -16,4 +17,3 @@ aiofiles==23.2.1
 pytest==8.2.0
 httpx==0.27.0
 pytest-asyncio==0.23.6
-pytesseract==0.3.10

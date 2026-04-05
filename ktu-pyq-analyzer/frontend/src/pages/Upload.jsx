@@ -42,7 +42,7 @@ export default function UploadPage() {
     try {
       const paper = await uploadPaper(fd, setProgress)
       toast.success('Paper uploaded successfully!')
-      navigate(`/processing/${paper.id}`)
+      navigate(`/viewer/${paper.id}`)
     } catch (e) {
       toast.error(e.message)
     } finally {
