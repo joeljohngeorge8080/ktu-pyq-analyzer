@@ -9,3 +9,6 @@ api_router.include_router(subjects_router)
 api_router.include_router(papers_router)
 api_router.include_router(questions_router)
 api_router.include_router(analytics_router)
+
+from .downloads import router as downloads_router
+api_router.include_router(downloads_router)

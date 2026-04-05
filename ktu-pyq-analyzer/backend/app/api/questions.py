@@ -44,3 +44,22 @@ def delete_question(question_id: int, db: Session = Depends(get_db)):
         raise HTTPException(404, "Question not found")
     db.delete(q)
     db.commit()
+
+@router.put("/{question_id}", response_model=QuestionOut)
+def update_question(question_id: int, payload: dict, db: Session = Depends(get_db)):
+    from app.models import Question
+    q = db.query(Question).filter(Question.id == question_id).first()
+    if not q:
+        raise HTTPException(404, "Question not found")
+    
+    if "module" in payload:
+        q.module = payload["module"]
+    if "type" in payload:
+        q.type = payload["type"]
+    if "question_number" in payload:
+        q.question_number = payload["question_number"]
+        
+    db.commit()
+    db.refresh(q)
+    return q
+

@@ -3,6 +3,7 @@ FROM python:3.11-slim
 # Install poppler (for pdf2image) and other system deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     poppler-utils \
+    tesseract-ocr \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 

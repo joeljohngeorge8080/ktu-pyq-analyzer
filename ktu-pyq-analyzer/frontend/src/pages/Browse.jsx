@@ -9,9 +9,9 @@ import { useApi } from '../hooks/useApi'
 import { getQuestions, getSubjects, deleteQuestion } from '../services/api'
 import toast from 'react-hot-toast'
 
-const MODULE_OPTS = [{ value: '', label: 'All Modules' }, ...[1,2,3,4,5].map(n => ({ value: n, label: `Module ${n}` }))]
+const MODULE_OPTS = [{ value: '', label: 'All Modules' }, ...[1, 2, 3, 4, 5].map(n => ({ value: n, label: `Module ${n}` }))]
 const TYPE_OPTS = [{ value: '', label: 'All Types' }, { value: 'short', label: 'Short' }, { value: 'long', label: 'Long' }]
-const YEAR_OPTS = [{ value: '', label: 'All Years' }, ...[2024,2023,2022,2021,2020,2019,2018].map(y => ({ value: y, label: String(y) }))]
+const YEAR_OPTS = [{ value: '', label: 'All Years' }, ...[2024, 2023, 2022, 2021, 2020, 2019, 2018].map(y => ({ value: y, label: String(y) }))]
 
 export default function Browse() {
   const [module_, setModule] = useState('')
@@ -54,9 +54,17 @@ export default function Browse() {
 
   return (
     <div className="space-y-6 fade-up">
-      <div>
-        <h1 className="text-3xl font-display font-bold text-white">Browse Questions</h1>
-        <p className="text-slate-500 mt-1">Organized by module and type</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-display font-bold text-white">Browse Questions</h1>
+          <p className="text-slate-500 mt-1">Organized by module and type</p>
+        </div>
+
+        {subjectId && (
+          <a href={`/api/v1/download/subject?subject_id=${subjectId}`} download className="flex items-center gap-2 bg-primary-500/20 text-primary-400 px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-500/30 transition-colors">
+            Download Subject Dataset
+          </a>
+        )}
       </div>
 
       {/* Filters */}
@@ -75,7 +83,7 @@ export default function Browse() {
 
       {loading && (
         <div className="space-y-3">
-          {[1,2,3].map(i => <div key={i} className="skeleton h-32 rounded-2xl" />)}
+          {[1, 2, 3].map(i => <div key={i} className="skeleton h-32 rounded-2xl" />)}
         </div>
       )}
 
@@ -89,9 +97,16 @@ export default function Browse() {
 
       {Object.entries(grouped).sort().map(([mod, types]) => (
         <div key={mod} className="space-y-3">
-          <h2 className="font-display font-bold text-white text-lg flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-primary-400" />{mod}
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="font-display font-bold text-white text-lg flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-primary-400" />{mod}
+            </h2>
+            {subjectId && (
+              <a href={`/api/v1/download/module?subject_id=${subjectId}&module=${mod.replace('Module ', '')}`} download className="text-xs text-primary-400 bg-primary-500/10 hover:bg-primary-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                Download {mod}
+              </a>
+            )}
+          </div>
           {Object.entries(types).map(([typ, qs]) => (
             <Card key={typ}>
               <div className="flex items-center justify-between mb-3">

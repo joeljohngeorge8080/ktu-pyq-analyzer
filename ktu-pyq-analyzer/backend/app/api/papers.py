@@ -97,3 +97,16 @@ def delete_paper(paper_id: int, db: Session = Depends(get_db)):
         raise HTTPException(404, "Paper not found")
     db.delete(paper)
     db.commit()
+
+@router.post("/{paper_id}/process")
+def process_paper(paper_id: int, db: Session = Depends(get_db)):
+    from app.services.question_parser import parse_paper
+    try:
+        success = parse_paper(db, paper_id)
+        if success:
+            return {"status": "success", "message": "Paper processed successfully"}
+        raise HTTPException(500, "Processing failed")
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+    except Exception as e:
+        raise HTTPException(500, str(e))

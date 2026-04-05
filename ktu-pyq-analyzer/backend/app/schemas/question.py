@@ -26,6 +26,26 @@ class QuestionCreate(BaseModel):
             raise ValueError("Type must be 'short' or 'long'")
         return v
 
+class QuestionUpdate(BaseModel):
+    module: Optional[int] = None
+    type: Optional[str] = None
+    question_number: Optional[str] = None
+
+    @field_validator("module")
+    @classmethod
+    def module_range(cls, v):
+        if v is not None and v not in range(1, 6):
+            raise ValueError("Module must be 1–5")
+        return v
+
+    @field_validator("type")
+    @classmethod
+    def type_valid(cls, v):
+        if v is not None and v not in ("short", "long"):
+            raise ValueError("Type must be 'short' or 'long'")
+        return v
+
+
 class QuestionOut(BaseModel):
     id: int
     paper_id: int

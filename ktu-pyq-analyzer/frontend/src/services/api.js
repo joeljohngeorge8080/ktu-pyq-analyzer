@@ -30,7 +30,9 @@ export const deletePaper = (id) => client.delete(`/papers/${id}`)
 // Questions
 export const saveQuestion = (payload) => client.post('/questions', payload).then(r => r.data)
 export const getQuestions = (params) => client.get('/questions', { params }).then(r => r.data)
+export const updateQuestion = (id, payload) => client.put(`/questions/${id}`, payload).then(r => r.data)
 export const deleteQuestion = (id) => client.delete(`/questions/${id}`)
+export const processPaper = (id) => client.post(`/papers/${id}/process`).then(r => r.data)
 
 // Analytics
 export const getAnalytics = (params) => client.get('/analytics/frequency', { params }).then(r => r.data)
