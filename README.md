@@ -1,0 +1,1 @@
+# ktu-pyq-analyzer
